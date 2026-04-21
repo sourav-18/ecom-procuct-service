@@ -1,0 +1,21 @@
+services:
+  mongo:
+    image: mongo:latest
+    container_name: product-mongo
+    restart: always
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  app:
+    build: .
+    container_name: app
+    image: product-image
+    depends_on:
+      - mongo
+    ports:
+      - "8080:8080"
+
+volumes:
+  mongo-data:
